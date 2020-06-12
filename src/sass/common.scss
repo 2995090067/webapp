@@ -1,0 +1,391 @@
+@mixin setAnimate($property:all, $duration:1s, $timing-function:ease-in, $delay:0) {
+    transition-property: $property;
+    transition-duration: $duration;
+    transition-time-function: $timing-function;
+    transition-delay: $delay;
+}
+@mixin block($width: 50px, $height:50px, $lineHeight:50px) {
+    display: block;
+    width: $width;
+    height: $height;
+    line-height: $lineHeight;
+    text-align: center;
+}
+@mixin setBlock($width: 50px, $height:50px, $lineHeight:normal) {
+    width: $width;
+    height: $height;
+    line-height: $lineHeight;
+}
+@mixin positionCenter($supportTransform:true) {
+    position: absolute;
+    left: 50%;
+    top: 50%; //     @if $supportTransform {
+    // 　　　　transform: translate(-50%,-50%);
+    // 　　}
+}
+
+body,
+html {
+    height: 100%;
+    /*解决ios上滑动不流畅*/
+    -webkit-overflow-scrolling: touch;
+}
+$baseColor: #333333;
+$baseColor2: #469aeb;
+
+::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+}
+// 修正下拉刷新
+
+.van-pull-refresh {
+    min-height: 100%;
+}
+// 隐藏列表自带加载图标
+// .van-list__loading {
+//     display: none;
+// }
+
+.app {
+    height: 100%;
+    // font-family: "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+    color: $baseColor;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    // height: 100%;
+    .layout {
+        // overflow: auto;
+        // height: 100%;
+    }
+
+    li {
+        list-style: none;
+    }
+
+    button,
+    input {
+        outline: none;
+        appearance: none;
+    }
+
+    a {
+        cursor: pointer;
+        text-decoration: none;
+        color: $baseColor;
+
+        &:active {
+            color: #395c80;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+    }
+
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity 0.5s;
+    }
+    /* .fade-leave-active in below version 2.1.8 */
+    .fade-enter,
+    .fade-leave-to {
+        opacity: 0;
+    }
+
+    .textOverflow {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .van-button--custom {
+        background-color: $baseColor2;
+        border-color: $baseColor2;
+
+        .van-button__text {
+            color: #fff;
+        }
+    }
+
+    .van-tabs__nav--card {
+        border-color: $baseColor2;
+
+        .van-tab {
+            color: $baseColor2;
+            border-right-color: $baseColor2;
+
+            &.van-tab--active {
+                background-color: $baseColor2;
+                color: #fff;
+            }
+        }
+    }
+
+    .layout {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        background: #f7f7f7;
+    }
+
+    header {
+        position: relative;
+
+        &.header {
+            background-color: #2795ee;
+
+            .head {
+                position: relative;
+                display: flex;
+                height: 0.9rem;
+                justify-content: center;
+                align-items: center;
+                color: #fff;
+                font-size: 0.34rem;
+
+                &.Headerlevel2 {
+                    display: block;
+
+                    .back {
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        bottom: 0;
+                        width: 1rem;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        color: #fff;
+                    }
+
+                    .title {
+                        // display: block;
+                        display: flex;
+                        padding: 0 1rem;
+                        justify-content: center;
+                        align-items: center;
+                        height: 100%;
+                        // max-width: 60%;
+                    }
+                }
+            }
+        }
+    }
+
+    .banner {
+        img {
+            width: 100%;
+        }
+    }
+    // 九宫格布局
+    .nineLayout {
+        display: flex;
+        flex-wrap: wrap;
+
+        li {
+            position: relative;
+            flex: 0 0 33.33%;
+            padding-top: 33.33%;
+        }
+    }
+    //基本列表
+    ul.baseList {
+        li {
+            padding: 5px 10px;
+            overflow: hidden;
+            line-height: 1;
+            text-overflow: ellipsis;
+            cursor: pointer;
+            font-size: 0.3rem;
+
+            &:hover {
+                background-color: #f1f1f1;
+            }
+        }
+    }
+    // 通用标题
+    .commonTitle {
+        position: relative;
+        display: flex;
+        align-items: center;
+        margin-top: 0.1rem;
+        padding: 0 0.2rem;
+        height: 0.5rem;
+        font-size: 0.3rem;
+
+        &:before {
+            content: ' ';
+            position: absolute;
+            top: 50%;
+            transform: translate(0,-50%);
+            width: 0.05rem;
+            background: $baseColor2;
+            height: 0.31rem;
+        }
+
+        span {
+            margin-left: 0.2rem;
+            flex: 1;
+            line-height: 1;
+        }
+
+        .more {
+            color: #9a9a9a;
+            font-size: 0.2rem;
+        }
+    }
+    // 通用tab
+    .commonTab {
+        display: flex;
+        margin: 0 0.15rem;
+
+        li {
+            // padding-top: 0.07rem;
+            display: flex;
+            flex: 1;
+            align-items: center;
+            justify-content: center;
+            margin: 0 0.1rem;
+            padding: 0.15rem;
+            text-align: center;
+            background-color: #e6e6e6;
+            font-size: 0.26rem;
+
+            &.active {
+                background-color: #ec6941;
+                color: #fff;
+            }
+        }
+    }
+    // 自定义tab样式
+    .customTab {
+        background: #78b8eb;
+        padding: 0.15rem 0;
+
+        .van-tabs {
+            padding-top: 0.55rem;
+            line-height: 0.55rem;
+
+            span {
+                line-height: 0.55rem;
+                font-size: 0.3rem;
+            }
+
+            .van-tabs__wrap {
+                height: 0.55rem;
+
+                .van-tab {
+                    border-right-color: #fff;
+                    background-color: #78b8eb;
+                    color: #fff;
+                }
+
+                .van-tab--active {
+                    background-color: #fff;
+                    color: #469aeb;
+                }
+            }
+
+            .van-tabs__nav--card {
+                height: 0.55rem;
+                border-color: #fff;
+            }
+        }
+    }
+    // 通用上传样式
+    .commonUpload {
+        width: 1.8rem;
+        height: 1.9rem;
+        background: url("./assets/upload.png") #fff no-repeat;
+        background-size: contain;
+    }
+    // 异议处理文件上传字段超出隐藏
+    .fieldFormat {
+        display: flex;
+        justify-content: center;
+        word-break: keep-all;
+
+        em {
+            max-width: 3rem;
+        }
+    }
+    // 自定义输入框
+    .customInput {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 0.7rem;
+        line-height: 1;
+        border: none;
+        background: none;
+        color: #fff;
+        // caret-color: $baseColor2;
+        font-size: 0.36rem;
+
+        &::placeholder {
+            color: #fff;
+        }
+    }
+    //自定义步骤
+    .stepBox {
+        ul {
+            overflow: auto;
+            display: flex;
+            padding: 0.2rem 0.9rem;
+            text-align: center;
+
+            li {
+                flex: 1;
+                position: relative;
+                display: inline-block;
+                vertical-align: middle;
+                line-height: 30px;
+                color: #999;
+                font-size: 0.24rem;
+
+                &.line {
+                    margin: 20px 0 0;
+                    // width: 100px;
+                    height: 1px;
+                    background-color: #dfdfdf;
+                }
+
+                span {
+                    @include block(20px, 20px, 20px);
+                    margin: 0 auto;
+                    border-radius: 50%;
+                    border: 1px solid #dfdfdf;
+                    color: #999;
+
+                    &.success {
+                        display: none;
+                    }
+                }
+
+                &.active {
+                    color: #333;
+
+                    .ico {
+                        background-color: $baseColor2;
+                        border: 1px solid $baseColor2;
+                        color: #fff;
+                    }
+                }
+
+                &.done {
+                    color: #333;
+
+                    .success {
+                        display: block;
+                        border: 1px solid $baseColor2;
+                        // background: url("../style/res/step-done.png") center no-repeat;
+                    }
+
+                    .ico {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <meta name="description" content="description" />
+    <meta name="keywords" content="keywords" />
+    <meta content="caibaojian" name="author" />
+    <title>index</title>
+    <script type="text/javascript">
+
+    //designWidth:设计稿的实际宽度值，需要根据实际设置
+    //maxWidth:制作稿的最大宽度值，需要根据实际设置
+    //这段js的最后面有两个参数记得要设置，一个为设计稿实际宽度，一个为制作稿最大宽度，例如设计稿为750，最大宽度为750，则为(750,750)
+    ;(function(designWidth, maxWidth) {
+    	var doc = document,
+    	win = window,
+    	docEl = doc.documentElement,
+    	remStyle = document.createElement("style"),
+    	tid;
+
+    	function refreshRem() {
+    		var width = docEl.getBoundingClientRect().width;
+    		maxWidth = maxWidth || 540;
+    		width>maxWidth && (width=maxWidth);
+    		var rem = width * 100 / designWidth;
+    		remStyle.innerHTML = 'html{font-size:' + rem + 'px;}';
+            window.bodyHeightToRem = window.innerHeight / rem
+    	}
+
+    	if (docEl.firstElementChild) {
+    		docEl.firstElementChild.appendChild(remStyle);
+    	} else {
+    		var wrap = doc.createElement("div");
+    		wrap.appendChild(remStyle);
+    		doc.write(wrap.innerHTML);
+    		wrap = null;
+    	}
+    	//要等 wiewport 设置好后才能执行 refreshRem，不然 refreshRem 会执行2次；
+    	refreshRem();
+
+    	win.addEventListener("resize", function() {
+    		clearTimeout(tid); //防止执行两次
+    		tid = setTimeout(refreshRem, 300);
+    	}, false);
+
+    	win.addEventListener("pageshow", function(e) {
+    		if (e.persisted) { // 浏览器后退的时候重新计算
+    			clearTimeout(tid);
+    			tid = setTimeout(refreshRem, 300);
+    		}
+    	}, false);
+
+    	if (doc.readyState === "complete") {
+    		doc.body.style.fontSize = "16px";
+    	} else {
+    		doc.addEventListener("DOMContentLoaded", function(e) {
+    			doc.body.style.fontSize = "16px";
+    		}, false);
+    	}
+    })(750, 750);
+
+    //日期
+    Date.prototype.format = function(fmt) {
+        var o = {
+            "M+" : this.getMonth()+1,                 //月份
+            "d+" : this.getDate(),                    //日
+            "h+" : this.getHours(),                   //小时
+            "m+" : this.getMinutes(),                 //分
+            "s+" : this.getSeconds(),                 //秒
+            "q+" : Math.floor((this.getMonth()+3)/3), //季度
+            "S"  : this.getMilliseconds()             //毫秒
+        };
+        if(/(y+)/.test(fmt)) {
+            fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        }
+        for(var k in o) {
+            if(new RegExp("("+ k +")").test(fmt)){
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+            }
+        }
+        return fmt;
+    }
+    </script>
+</head>
+
+<body>
+    <div id="app"></div>
+</body>
+
+</html>
